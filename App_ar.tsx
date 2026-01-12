@@ -62,7 +62,7 @@ const SegmentedControl: React.FC<{
 
 const DigitalLedger: React.FC<{ 
     revenue: number; 
-    items: { category: string; amount: number; color?: string; highlight?: boolean; subValue?: string }[] 
+    items: { category: string; amount: number; color?: string; highlight?: boolean; subValue?: string; subLabel?: string }[] 
 }> = ({ revenue, items }) => {
     return (
         <div className="w-full space-y-6">
@@ -100,17 +100,27 @@ const DigitalLedger: React.FC<{
                                         <span className="text-xs font-medium text-emerald-400/80 bg-emerald-400/10 px-2 py-0.5 rounded-full">{percent}٪</span>
                                     </div>
                                     
-                                    <div className="flex flex-col">
-                                        <div className="flex items-baseline justify-end gap-2 mt-1">
-                                            <span className="text-2xl sm:text-4xl font-black text-white tracking-tighter tabular-nums text-shadow-sm">{formatCurrency(item.amount)}</span>
+                                    <div className="flex flex-col relative z-20">
+                                        {/* Removed justify-end to align right in RTL */}
+                                        <div className="flex items-baseline gap-2 mt-1">
+                                            <span className="text-3xl sm:text-5xl font-black text-white tracking-tighter tabular-nums text-shadow-sm">{formatCurrency(item.amount)}</span>
                                         </div>
                                         {item.subValue && (
-                                            <p className="text-xs text-emerald-100/60 font-medium mt-1 tracking-wide">{item.subValue}</p>
+                                            <div className="mt-4 inline-block">
+                                                <div className="inline-flex items-center gap-3 px-4 py-2.5 rounded-xl bg-white/10 border border-white/20 shadow-lg backdrop-blur-md transition-transform hover:scale-105 duration-300">
+                                                    <span className="text-lg font-bold text-white tabular-nums tracking-tight">{item.subValue}</span>
+                                                    {item.subLabel && (
+                                                        <span className="text-[9px] font-bold text-emerald-100/70 uppercase tracking-widest border-r border-white/20 pr-3 leading-none font-cairo">
+                                                            {item.subLabel}
+                                                        </span>
+                                                    )}
+                                                </div>
+                                            </div>
                                         )}
                                     </div>
 
                                     {/* Progress Bar specific to highlight */}
-                                    <div className="w-full h-1.5 bg-black/40 rounded-full overflow-hidden mt-4">
+                                    <div className="w-full h-1.5 bg-black/40 rounded-full overflow-hidden mt-5">
                                         <motion.div 
                                             initial={{ width: 0 }}
                                             animate={{ width: `${percent}%` }}
@@ -216,7 +226,7 @@ const App_ar: React.FC<{ onToggleLanguage: () => void }> = ({ onToggleLanguage }
       { value: 0.25, label: '٢٥٪' },
   ];
   
-  const ledgerItems: { category: string; amount: number; color?: string; highlight?: boolean; subValue?: string }[] = [];
+  const ledgerItems: { category: string; amount: number; color?: string; highlight?: boolean; subValue?: string; subLabel?: string }[] = [];
   
   ledgerItems.push({ category: `رسوم الإدارة (${Math.round(managementFee * 100)}٪)`, amount: effectiveMabaat, color: 'bg-purple-400' });
   ledgerItems.push({ 
@@ -224,7 +234,8 @@ const App_ar: React.FC<{ onToggleLanguage: () => void }> = ({ onToggleLanguage }
       amount: effectiveNetIncome, 
       color: 'bg-emerald-400', 
       highlight: true,
-      subValue: `${netIncomePerUnit.toLocaleString('ar-SA')} ريال / للوحدة سنوياً`
+      subValue: `${netIncomePerUnit.toLocaleString('ar-SA')} ريال`,
+      subLabel: 'للوحدة / سنوياً'
   });
 
   const priceLabel = '(شهري)';

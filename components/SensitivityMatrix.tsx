@@ -113,7 +113,7 @@ const SensitivityMatrix: React.FC<SensitivityMatrixProps> = ({ lang, scenarioId 
                 
                 {/* Header */}
                 <div className="flex flex-col sm:flex-row items-center justify-between mb-8 sm:mb-12 border-b border-white/5 pb-6 sm:pb-8 gap-6">
-                    <div className="text-center sm:text-left rtl:sm:text-right">
+                    <div className={`text-center ${isRTL ? 'sm:text-right' : 'sm:text-left'}`}>
                         <h3 className="text-2xl sm:text-4xl font-bold text-white tracking-tight mb-2 sm:mb-3">
                             {t.title}
                         </h3>
@@ -141,7 +141,7 @@ const SensitivityMatrix: React.FC<SensitivityMatrixProps> = ({ lang, scenarioId 
                         {/* Column Headers */}
                         <div className="grid grid-cols-6 gap-4 mb-6 px-2">
                              <div className="col-span-1 flex items-end pb-2">
-                                <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-white/40 pl-2">
+                                <span className={`text-[11px] font-bold uppercase tracking-[0.2em] text-white/40 ${isRTL ? 'pr-2' : 'pl-2'}`}>
                                     {t.occupancyLabel}
                                 </span>
                              </div>
@@ -161,7 +161,7 @@ const SensitivityMatrix: React.FC<SensitivityMatrixProps> = ({ lang, scenarioId 
                             {t.scenarios.map((scenario, sIdx) => (
                                 <div key={sIdx} className="grid grid-cols-6 gap-4 items-center p-2 rounded-2xl hover:bg-white/5 transition-colors duration-300">
                                     {/* Row Header */}
-                                    <div className="col-span-1 pr-4">
+                                    <div className={`col-span-1 ${isRTL ? 'pl-4' : 'pr-4'} text-start`}>
                                         <div className="text-[17px] font-bold text-white mb-2 tracking-tight">{scenario.name}</div>
                                         <div className="text-[11px] font-semibold text-[#8A6E99] bg-[#8A6E99]/10 inline-block px-3 py-1 rounded-lg tracking-wide border border-[#8A6E99]/20 whitespace-nowrap">
                                             {scenario.price}
