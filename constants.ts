@@ -2,7 +2,7 @@
 import { Scenario, ScenarioType, MarketingVideo, Branch, ComparisonLink } from './types';
 
 export const FURNISHING_COST_PER_UNIT = 50250;
-export const MABAAT_SHARE_PERCENTAGE = 0.15;
+export const MABAAT_SHARE_PERCENTAGE = 0.25;
 export const COMP_SET_SHEET_URL = "https://docs.google.com/spreadsheets/d/1qpz5XSqgJpHx7WrRuPAgqmRgnkwdKS0vh1nVJXlv1dA/edit?usp=sharing";
 
 export const SCENARIOS: Scenario[] = [

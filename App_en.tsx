@@ -210,7 +210,7 @@ const App_en: React.FC<{ onToggleLanguage: () => void }> = ({ onToggleLanguage }
   ];
 
   const feeOptions = [
-      { value: 0.15, label: '15%' },
+      { value: 0.25, label: '25%' },
   ];
 
   // Build ledger items dynamically
@@ -442,6 +442,13 @@ const App_en: React.FC<{ onToggleLanguage: () => void }> = ({ onToggleLanguage }
                                         <span className="text-sm text-white/70">Est. Cost Per Unit</span>
                                         <div className="text-right">
                                             <span className="block text-lg font-bold text-white tabular-nums">{formatCurrency(FURNISHING_COST_PER_UNIT)}</span>
+                                        </div>
+                                    </div>
+
+                                    <div className="flex justify-between items-center border-b border-white/10 pb-3">
+                                        <span className="text-sm text-white/70">Total Furnishing Cost</span>
+                                        <div className="text-right">
+                                            <span className="block text-lg font-bold text-white tabular-nums">{formatCurrency(totalFurnitureCost)}</span>
                                         </div>
                                     </div>
 

@@ -207,7 +207,7 @@ const App_ar: React.FC<{ onToggleLanguage: () => void }> = ({ onToggleLanguage }
   ];
 
   const feeOptions = [
-      { value: 0.15, label: '١٥٪' },
+      { value: 0.25, label: '٢٥٪' },
   ];
   
   const ledgerItems: { category: string; amount: number; color?: string; highlight?: boolean }[] = [];
@@ -427,6 +427,13 @@ const App_ar: React.FC<{ onToggleLanguage: () => void }> = ({ onToggleLanguage }
                                         <span className="text-sm text-white/70">التكلفة التقديرية للوحدة</span>
                                         <div className="text-left">
                                             <span className="block text-lg font-bold text-white tabular-nums">{formatCurrency(FURNISHING_COST_PER_UNIT)}</span>
+                                        </div>
+                                    </div>
+                                    
+                                    <div className="flex justify-between items-center border-b border-white/10 pb-3">
+                                        <span className="text-sm text-white/70">إجمالي تكلفة التأثيث</span>
+                                        <div className="text-left">
+                                            <span className="block text-lg font-bold text-white tabular-nums">{formatCurrency(totalFurnitureCost)}</span>
                                         </div>
                                     </div>
 
