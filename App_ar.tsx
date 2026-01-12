@@ -62,7 +62,7 @@ const SegmentedControl: React.FC<{
 
 const DigitalLedger: React.FC<{ 
     revenue: number; 
-    items: { category: string; amount: number; color?: string; highlight?: boolean }[] 
+    items: { category: string; amount: number; color?: string; highlight?: boolean; subValue?: string }[] 
 }> = ({ revenue, items }) => {
     return (
         <div className="w-full space-y-6">
@@ -100,8 +100,13 @@ const DigitalLedger: React.FC<{
                                         <span className="text-xs font-medium text-emerald-400/80 bg-emerald-400/10 px-2 py-0.5 rounded-full">{percent}٪</span>
                                     </div>
                                     
-                                    <div className="flex items-baseline justify-end gap-2 mt-1">
-                                        <span className="text-2xl sm:text-4xl font-black text-white tracking-tighter tabular-nums text-shadow-sm">{formatCurrency(item.amount)}</span>
+                                    <div className="flex flex-col">
+                                        <div className="flex items-baseline justify-end gap-2 mt-1">
+                                            <span className="text-2xl sm:text-4xl font-black text-white tracking-tighter tabular-nums text-shadow-sm">{formatCurrency(item.amount)}</span>
+                                        </div>
+                                        {item.subValue && (
+                                            <p className="text-xs text-emerald-100/60 font-medium mt-1 tracking-wide">{item.subValue}</p>
+                                        )}
                                     </div>
 
                                     {/* Progress Bar specific to highlight */}
@@ -156,6 +161,7 @@ const App_ar: React.FC<{ onToggleLanguage: () => void }> = ({ onToggleLanguage }
   const effectiveRevenue = Math.round(baseFinancials.revenue * occupancyRate);
   const effectiveMabaat = Math.round(effectiveRevenue * managementFee);
   const effectiveNetIncome = effectiveRevenue - effectiveMabaat;
+  const netIncomePerUnit = Math.round(effectiveNetIncome / activeScenario.unitCount);
 
   const totalFurnitureCost = activeScenario.unitCount * FURNISHING_COST_PER_UNIT;
   
@@ -210,10 +216,16 @@ const App_ar: React.FC<{ onToggleLanguage: () => void }> = ({ onToggleLanguage }
       { value: 0.25, label: '٢٥٪' },
   ];
   
-  const ledgerItems: { category: string; amount: number; color?: string; highlight?: boolean }[] = [];
+  const ledgerItems: { category: string; amount: number; color?: string; highlight?: boolean; subValue?: string }[] = [];
   
   ledgerItems.push({ category: `رسوم الإدارة (${Math.round(managementFee * 100)}٪)`, amount: effectiveMabaat, color: 'bg-purple-400' });
-  ledgerItems.push({ category: 'صافي الدخل (المالك)', amount: effectiveNetIncome, color: 'bg-emerald-400', highlight: true });
+  ledgerItems.push({ 
+      category: 'صافي الدخل (المالك)', 
+      amount: effectiveNetIncome, 
+      color: 'bg-emerald-400', 
+      highlight: true,
+      subValue: `${netIncomePerUnit.toLocaleString('ar-SA')} ريال / للوحدة سنوياً`
+  });
 
   const priceLabel = '(شهري)';
 
@@ -232,7 +244,7 @@ const App_ar: React.FC<{ onToggleLanguage: () => void }> = ({ onToggleLanguage }
               الندى<span className="text-[#4A2C5A]">.</span>
             </h1>
             <p className="text-sm sm:text-2xl text-gray-500 max-w-3xl mx-auto font-medium leading-relaxed tracking-tight px-4 mb-8">
-                تحويل <span className="text-[#2A5B64]">٢٨ شقة سكنية</span> (٢٥ شقة غرفة وصالة + ٣ شقق غرفتين وصالة) إلى مجمع سكن مشترك عالي العائد.
+                تحويل <span className="text-[#2A5B64]">٢٨ شقة سكنية</span> (٢٧ محولة + ١ خاصة) إلى مجمع سكن مشترك عالي العائد.
             </p>
 
             <motion.button 
@@ -486,11 +498,7 @@ const App_ar: React.FC<{ onToggleLanguage: () => void }> = ({ onToggleLanguage }
                                  <div className="space-y-2">
                                      <div className="flex items-start gap-2 text-xs text-white/70">
                                         <span className="mt-1 w-1.5 h-1.5 rounded-full bg-[#8A6E99] flex-shrink-0"></span>
-                                        <span>٢٤ وحدة (غرفة وصالة): تحويل كل منها إلى غرفتين ماستر مستقلتين (إجمالي ٤٨ غرفة ماستر).</span>
-                                     </div>
-                                     <div className="flex items-start gap-2 text-xs text-white/70">
-                                        <span className="mt-1 w-1.5 h-1.5 rounded-full bg-[#8A6E99] flex-shrink-0"></span>
-                                        <span>٣ وحدات (غرفتين وصالة): تحويل كل منها إلى جناح يضم غرفة ماستر وغرفتين فرديتين (إجمالي ٣ ماستر + ٦ فردي).</span>
+                                        <span>٢٧ وحدة: تحويل كل منها إلى جناح يضم غرفة ماستر وغرفتين فرديتين (إجمالي ٢٧ ماستر + ٥٤ فردي).</span>
                                      </div>
                                      <div className="flex items-start gap-2 text-xs text-white/70">
                                         <span className="mt-1 w-1.5 h-1.5 rounded-full bg-[#8A6E99] flex-shrink-0"></span>

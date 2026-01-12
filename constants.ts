@@ -11,29 +11,29 @@ export const SCENARIOS: Scenario[] = [
     type: ScenarioType.LONG_TERM,
     name: 'Al Nada Coliving Strategy',
     color: '#2A5B64', // Teal
-    description: 'Conversion of 28 apartments into a high-yield Coliving Community. Mix includes 24x 1BRs converted to dual-master units, 3x 2BRs converted to mixed suites, and 1x dedicated female unit.',
+    description: 'Conversion of 28 apartments into a high-yield Coliving Community. Strategy shifts to maximizing capacity with 27 units converted to mixed suites (1 Master + 2 Singles) and 1 dedicated female unit.',
     
     financials: {
         worst: {
-            // (24 * 2 * 3700) + (1 * 6200) + (3 * (3700 + 2900 + 2900))
-            // 177,600 + 6,200 + 28,500 = 212,300 * 12
-            revenue: 2547600, 
+            // (27 * 9500) + (1 * 6200)
+            // 256,500 + 6,200 = 262,700 * 12
+            revenue: 3152400, 
             mabaatShare: 0, // Calculated dynamically in App
             netIncome: 0,   // Calculated dynamically in App
             roi: 0
         },
         base: {
-             // (24 * 2 * 4000) + (1 * 6500) + (3 * (4000 + 3000 + 3000))
-             // 192,000 + 6,500 + 30,000 = 228,500 * 12
-            revenue: 2742000, 
+             // (27 * 10000) + (1 * 6500)
+             // 270,000 + 6,500 = 276,500 * 12
+            revenue: 3318000, 
             mabaatShare: 0, 
             netIncome: 0, 
             roi: 0
         },
         best: {
-             // (24 * 2 * 4200) + (1 * 6800) + (3 * (4200 + 3250 + 3250))
-             // 201,600 + 6,800 + 32,100 = 240,500 * 12
-            revenue: 2886000, 
+             // (27 * 10700) + (1 * 6800)
+             // 288,900 + 6,800 = 295,700 * 12
+            revenue: 3548400, 
             mabaatShare: 0, 
             netIncome: 0, 
             roi: 0
@@ -42,29 +42,19 @@ export const SCENARIOS: Scenario[] = [
 
     propertyValue: 0, 
     
-    unitCount: 28, // 25 1BR + 3 2BR
+    unitCount: 28, 
     unitLabel: 'Units',
     occupancyDurationLabel: 'Flexible Contracts',
     
     unitMix: [
         { 
-            name: 'Converted 1BR (2 Masters)', 
-            count: 24, 
-            avgPrice: 8000, // 4000 * 2
-            priceRange: { 
-                min: 7400, // 3700 * 2
-                avg: 8000, 
-                max: 8400  // 4200 * 2
-            }, 
-        },
-        { 
             name: 'Converted 2BR (1 Master + 2 Singles)', 
-            count: 3, 
-            avgPrice: 10000, // 4000 + (3000 * 2)
+            count: 27, 
+            avgPrice: 10000, 
             priceRange: { 
-                min: 9500, // 3700 + (2900 * 2)
+                min: 9500, 
                 avg: 10000, 
-                max: 10700  // 4200 + (3250 * 2)
+                max: 10700 
             }, 
         },
         { 

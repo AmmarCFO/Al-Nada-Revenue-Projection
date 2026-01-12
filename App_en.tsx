@@ -62,7 +62,7 @@ const SegmentedControl: React.FC<{
 
 const DigitalLedger: React.FC<{ 
     revenue: number; 
-    items: { category: string; amount: number; color?: string; highlight?: boolean }[] 
+    items: { category: string; amount: number; color?: string; highlight?: boolean; subValue?: string }[] 
 }> = ({ revenue, items }) => {
     return (
         <div className="w-full space-y-6">
@@ -101,8 +101,13 @@ const DigitalLedger: React.FC<{
                                         <span className="text-xs font-medium text-emerald-400/80 bg-emerald-400/10 px-2 py-0.5 rounded-full">{percent}%</span>
                                     </div>
                                     
-                                    <div className="flex items-baseline gap-2 mt-1">
-                                        <span className="text-2xl sm:text-4xl font-black text-white tracking-tighter tabular-nums text-shadow-sm">{formatCurrency(item.amount)}</span>
+                                    <div className="flex flex-col">
+                                        <div className="flex items-baseline gap-2 mt-1">
+                                            <span className="text-2xl sm:text-4xl font-black text-white tracking-tighter tabular-nums text-shadow-sm">{formatCurrency(item.amount)}</span>
+                                        </div>
+                                        {item.subValue && (
+                                            <p className="text-xs text-emerald-100/60 font-medium mt-1 tracking-wide">{item.subValue}</p>
+                                        )}
                                     </div>
 
                                     {/* Progress Bar specific to highlight */}
@@ -164,6 +169,7 @@ const App_en: React.FC<{ onToggleLanguage: () => void }> = ({ onToggleLanguage }
   
   // Net Income
   const effectiveNetIncome = effectiveRevenue - effectiveMabaat;
+  const netIncomePerUnit = Math.round(effectiveNetIncome / activeScenario.unitCount);
   
   // Investment Logic
   const totalFurnitureCost = activeScenario.unitCount * FURNISHING_COST_PER_UNIT;
@@ -214,10 +220,16 @@ const App_en: React.FC<{ onToggleLanguage: () => void }> = ({ onToggleLanguage }
   ];
 
   // Build ledger items dynamically
-  const ledgerItems: { category: string; amount: number; color?: string; highlight?: boolean }[] = [];
+  const ledgerItems: { category: string; amount: number; color?: string; highlight?: boolean; subValue?: string }[] = [];
   
   ledgerItems.push({ category: `Management Fee (${Math.round(managementFee * 100)}%)`, amount: effectiveMabaat, color: 'bg-purple-400' });
-  ledgerItems.push({ category: 'Net Income (Owner)', amount: effectiveNetIncome, color: 'bg-emerald-400', highlight: true });
+  ledgerItems.push({ 
+      category: 'Net Income (Owner)', 
+      amount: effectiveNetIncome, 
+      color: 'bg-emerald-400', 
+      highlight: true,
+      subValue: `SAR ${netIncomePerUnit.toLocaleString()} / Unit Annually`
+  });
 
   const priceLabel = '(Monthly)';
 
@@ -241,7 +253,7 @@ const App_en: React.FC<{ onToggleLanguage: () => void }> = ({ onToggleLanguage }
               Al Nada<span className="text-[#8A6E99]">.</span>
             </h1>
             <p className="text-sm sm:text-xl text-gray-500 max-w-2xl mx-auto font-medium leading-relaxed tracking-tight px-4 mb-8">
-                Conversion of <span className="text-[#2A5B64]">28 Apartments</span> (25 1BR + 3 2BR) into a high-yield Coliving Community.
+                Conversion of <span className="text-[#2A5B64]">28 Apartments</span> (27 Converted + 1 Private) into a high-yield Coliving Community.
             </p>
             
             <motion.button 
@@ -502,11 +514,7 @@ const App_en: React.FC<{ onToggleLanguage: () => void }> = ({ onToggleLanguage }
                                  <div className="space-y-2">
                                      <div className="flex items-start gap-2 text-xs text-white/70">
                                         <span className="mt-1 w-1.5 h-1.5 rounded-full bg-[#8A6E99] flex-shrink-0"></span>
-                                        <span>24 Units of 1BR converted to 2 Master Rooms each (Total 48 Masters).</span>
-                                     </div>
-                                     <div className="flex items-start gap-2 text-xs text-white/70">
-                                        <span className="mt-1 w-1.5 h-1.5 rounded-full bg-[#8A6E99] flex-shrink-0"></span>
-                                        <span>3 Units of 2BR converted to 1 Master + 2 Singles each (Total 3 Masters + 6 Singles).</span>
+                                        <span>27 Units converted to 1 Master + 2 Singles each (Total 27 Masters + 54 Singles).</span>
                                      </div>
                                      <div className="flex items-start gap-2 text-xs text-white/70">
                                         <span className="mt-1 w-1.5 h-1.5 rounded-full bg-[#8A6E99] flex-shrink-0"></span>
